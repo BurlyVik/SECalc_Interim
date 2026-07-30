@@ -41,6 +41,17 @@
             flex-direction: column;
         }
 
+        /* Notice Banner */
+        .interim-banner {
+            background: rgba(255, 157, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 157, 0, 0.3);
+            color: var(--accent-orange);
+            text-align: center;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
         /* Header & Nav */
         header {
             background: rgba(11, 14, 20, 0.95);
@@ -368,11 +379,14 @@
 </head>
 <body>
 
+    <div class="interim-banner">
+        Notice: Built as an interim calculator suite while se-calculator.com underwent scheduled maintenance.
+    </div>
+
     <header>
         <div class="brand">
             <div class="brand-logo">SE</div>
             <h1>SE <span>Calculator</span></h1>
-            <label>Here is the updated code containing a subtle, professional notice indicating that this tool served as an interim utility while the main site underwent maintenance. All specific mentions of direct comparison testing have been removed.</label>
         </div>
         <nav class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('thrusters')">Thrusters</button>
@@ -450,7 +464,6 @@
                                 </tr>
                             </thead>
                             <tbody id="thruster-results-body">
-                                <!-- Populated dynamically by JS -->
                             </tbody>
                         </table>
                     </div>
@@ -601,7 +614,7 @@
     </main>
 
     <footer>
-        Space Engineers Calculator &bull; Compatible with Game Version 1.200+
+        Space Engineers Interim Calculator &bull; Compatible with Game Version 1.200+
     </footer>
 
     <script>
@@ -649,7 +662,7 @@
             const atmoDensity = (parseFloat(document.getElementById('th-atmo').value) || 0) / 100;
             const margin = parseFloat(document.getElementById('th-margin').value) || 1.0;
 
-            const weightForce = mass * gravity * 9.81 / 1000; // in kN
+            const weightForce = mass * gravity * 9.81 / 1000;
             const targetForce = weightForce * margin;
 
             document.getElementById('res-min-force').innerText = weightForce.toLocaleString(undefined, {maximumFractionDigits:1}) + ' kN';
@@ -698,9 +711,6 @@
                 const gridClass = xmlDoc.querySelector('GridSizeEnum')?.textContent || 'Large';
                 const blocks = xmlDoc.querySelectorAll('MyObjectBuilder_CubeBlock');
 
-                let pcu = 0;
-                blocks.forEach(b => { pcu += 10; });
-
                 document.getElementById('bp-name').innerText = gridName;
                 document.getElementById('bp-grid-type').innerText = gridClass + ' Grid';
                 document.getElementById('bp-blocks').innerText = blocks.length.toLocaleString();
@@ -709,7 +719,6 @@
                 document.getElementById('bp-summary-card').style.display = 'block';
                 document.getElementById('bp-details-card').style.display = 'block';
 
-                // Display material estimates
                 const matBody = document.getElementById('bp-materials-body');
                 matBody.innerHTML = `
                     <tr><td>Iron Ingot</td><td>${(blocks.length * 1250).toLocaleString()} kg</td></tr>
@@ -745,8 +754,8 @@
             const h2Eng = parseInt(document.getElementById('pwr-h2-eng').value) || 0;
             const draw = parseFloat(document.getElementById('pwr-draw').value) || 0;
 
-            const maxOut = (smReact * 15) + (lgReact * 300) + (batts * 12) + (h2Eng * 5); // MW
-            const storedEnergy = batts * 3; // MWh
+            const maxOut = (smReact * 15) + (lgReact * 300) + (batts * 12) + (h2Eng * 5);
+            const storedEnergy = batts * 3;
 
             document.getElementById('pwr-max-out').innerText = maxOut + ' MW';
             document.getElementById('pwr-stored').innerText = storedEnergy + ' MWh';
@@ -806,7 +815,6 @@
             `;
         }
 
-        // Initialize default calculations on load
         window.onload = function() {
             calculateThrusters();
             calcPower();
